@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Image preloader for jQuery</title>
+    <style>
+      *{
+        padding: 0px;
+      }
+      body{
+        background-color:#000;
+      }
+      #loading{
+        margin: 30px auto;
+        background-color: #6B77AF;
+        width: 400px;
+        height: 30px;
+        line-height: 30px;
+        text-align:center;
+        color: #FFF;
+      }
+      #loaded{
+        display:none;
+        width:350px;
+        height:350px;
+        margin: 30px auto;
+      }
+    </style>
+    <script type="text/javascript" src="../jQuery/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../jquery-preload.min.js"></script>
+    
+    <script type="text/javascript">
+      
+      // #step 1 : define image to preload (it starts the download)
+      for(var i=0; i<10; i++){
+        $.preload.add("imgs/" + i + ".png");
+      }
+      
+      // #step 2 : end the image definition
+      $.preload.end();
+      
+      // the document onReady stated is delayed to the end of the download
+      
+      // #step 3 : picture are loaded, onReady is fired
+      $(function(){
+      
+        var i = 0;
+        $("#loading").remove();
+        $("#img").attr("src", "imgs/"+i+".png");
+        $("#loaded").show();
+        
+        setInterval(
+          function(){
+            i = (i+1) % 10;
+            $("#img").attr("src", "imgs/"+i+".png");
+          },
+          250
+        );
+      
+      }); 
+
+    </script>
+  </head>
+  <body
+    <div id="loading">Loading, please wait !</div>
+    <div id="loaded"><img id="img" /></div>
+  </body>
+</html>
